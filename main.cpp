@@ -1,45 +1,39 @@
+#include <algorithm>
 #include <iostream>
-#include <string>
-#include <map>
+#include <future>
 #include <vector>
+#include <sstream>
+#include <cmath>
 using namespace std;
+long long exponentiate(long long a, long long b, long long mod) {
+    long long result = 1;
+    a %= mod;
+    while (b > 0) {
+        if (b % 2 == 1)
+            result = (result * a) % mod;
+        b /= 2;
+    }
+    return result;
+}
 
 int main() {
-    map<char,int> letters;
-    string input;
-    cin >> input;
-    string output;
-    if (input.length() == 1) {
-        cout << input << endl;
-        return 0;
+    long long mod = 1e9 + 7;
+    int number_of_inputs;
+    cin >> number_of_inputs;
+    cin.ignore();
+
+    vector<pair<int,int>> inputs;
+    vector<future<long long>> futures;
+
+    for (int i = 0; i < number_of_inputs; i++) {
+        string line;
+        getline(cin, line);
+        int a, b;
+        istringstream(line) >> a >> b;
+        inputs.emplace_back(a, b);
     }
-    for (char i : input) {
-        letters[i]++;
+
+    for (auto& [a, b] : inputs) {
+        cout << exponentiate(a, b, mod) << endl;
     }
-    bool odd_dectected = false;
-    for (pair<const char, int> i  : letters) {
-        if (odd_dectected and i.second%2==1) {
-            cout << "NO SOLUTION" << endl;
-            return 0;
-        }
-        if (!odd_dectected and i.second%2==1) {
-            odd_dectected = true;
-        }
-    }
-    int central_position = 0;
-    for (pair i : letters) {
-        if (i.second%2==1) {
-            continue;
-        }
-        central_position = output.length()/2;
-        output.insert(central_position, i.second, i.first);
-    }
-    for (pair i : letters) {
-        if (i.second%2==1) {
-            central_position = output.length()/2;
-            output.insert(central_position, i.second, i.first);
-            break;
-        }
-    }
-    cout << output << endl;
 }
