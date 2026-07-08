@@ -1,29 +1,29 @@
 #include <bits/stdc++.h>
-#define range(i,a,b) for (int i = a; i < b; i++)
 using namespace std;
 int main() {
-    int n;
-    cin >> n;
-    vector<long long> inputs(n);
-    for (int i = 0; i < n; i++) {
-        cin >> inputs[i];
-    }
-    long long total = 0;
-    for (long long input:inputs) {
-        total += input;
-    }
-    long long ans = LLONG_MAX;
-    for (int mask = 0; mask < (1 << n); mask++) {
-        long long group1 = 0;
-
-        for (int i = 0; i < n; i++) {
-            if (mask & (1 << i)) {
-                group1 += inputs[i];
-            }
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+    //Solution
+    int n, m, adjustability;
+    cin >> n >> m >> adjustability;
+    vector<int> tenants(n), apartments(m);
+    for (int i = 0; i < n; i++) cin >> tenants[i];
+    for (int i = 0; i < m; i++) cin >> apartments[i];
+    sort(tenants.begin(), tenants.end());
+    sort(apartments.begin(), apartments.end());
+    int count_of_tenants_housed = 0,apartment_index = 0,tenant_index = 0;
+    while ((apartment_index < apartments.size()) && (tenant_index < tenants.size())) {
+        if (abs(apartments[apartment_index] - tenants[tenant_index]) <= adjustability) {
+            count_of_tenants_housed++;
+            tenant_index++;
+            apartment_index++;
+        } else if (apartments[apartment_index] > tenants[tenant_index]) {
+            tenant_index++;
+        } else if (apartments[apartment_index] < tenants[tenant_index]) {
+            apartment_index++;
         }
-
-        long long group2 = total - group1;
-        ans = (ans<abs(group1 - group2)) ? ans : abs(group1 - group2);
     }
-    cout << ans << endl;
+
+    cout << count_of_tenants_housed << "\n";
+
 }
