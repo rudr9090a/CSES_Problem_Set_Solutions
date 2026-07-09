@@ -4,24 +4,29 @@ int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
     //Solution
-    int children, max_weight;
-    cin >> children >> max_weight;
-    vector<int> weights(children);
-    for (int i = 0; i < children; i++) cin >> weights[i];
-    sort(weights.begin(), weights.end());
-    int no_of_gondolas = 0;
-    int lo = 0;
-    int hi = children - 1;
-    while (lo<=hi) {
-        if (lo == hi) {
-            no_of_gondolas++;
-            break;
-        }
-        if (weights[lo]+weights[hi] <= max_weight) {
-            lo++;
-        }
-        no_of_gondolas++;
-        hi--;
+    int tickets, buyers;
+    cin >> tickets >> buyers;
+    multiset<int> prices;
+    vector<int> customer_pays;
+    for (int i = 0; i < tickets; i++) {
+        int x;
+        cin >> x;
+        prices.insert(x);
     }
-    cout << no_of_gondolas << "\n";
+    for (int i = 0; i < buyers; i++){
+        int payed;
+        cin >> payed;
+        customer_pays.push_back(payed);
+    }
+    for (auto customer : customer_pays ) {
+        auto it = prices.upper_bound(customer);
+        if (it == prices.begin()) {
+            cout << -1 << "\n";
+            continue;
+        }
+        it--;
+        cout << *it << "\n";
+        prices.erase(it);
+
+    }
 }
