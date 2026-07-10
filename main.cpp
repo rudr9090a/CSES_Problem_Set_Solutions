@@ -1,38 +1,34 @@
+
 #include <vector>
 #include <iostream>
 #include <string>
 #include <bits/stdc++.h>
 using namespace std;
 int main() {
-    string ending_int_str;
-    getline(cin,ending_int_str);
-    int ending_int = stoi(ending_int_str);
-    string str;
-    getline(cin, str);
-    vector<int> vec;
-    str += " ";
-    string accumulated = "";
-    for (int  i = 0;i<=str.length();i++) {
+    vector<char> alphabets;
+    vector<int> numbers;
+    string input;
+    getline(cin, input);
+    char previous = input[0];
+    int count = 0 ;
 
-        if (str[i] == ' ') {
-            vec.push_back(stoi(accumulated));
-            accumulated = "";
+    for (int i = 0; i < input.length(); i++) {
+        if (previous == input[i]) {
+            count++;
+            alphabets.push_back(input[i]);
+            numbers.push_back(count);
         }
-        else {
-            accumulated += str[i];
+        else if (previous != input[i]) {
+            previous = input[i];
+            count = 1;
+
         }
     }
-    vector<int> ordered_list;
-    for (int i = 1;i<=ending_int;i++) {
-        ordered_list.push_back(i);
+    int largest = numbers[0];
+    for (int number : numbers) {
+        if (number > largest) {
+            largest = number;
+        }
     }
-    long int ordered_list_SUM = 0;
-    long int ved_SUM = 0;
-    for (int i = 0; i < ordered_list.size(); i++) {
-        ordered_list_SUM += ordered_list[i];
-    }
-    for (int i = 0; i < vec.size(); i++) {
-        ved_SUM += vec[i];
-    }
-    cout << ordered_list_SUM - ved_SUM << endl;
+    cout << largest << endl;
 }
