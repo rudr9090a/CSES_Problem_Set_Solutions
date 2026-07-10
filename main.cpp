@@ -4,29 +4,23 @@ int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
     //Solution
-    int tickets, buyers;
-    cin >> tickets >> buyers;
-    multiset<int> prices;
-    vector<int> customer_pays;
-    for (int i = 0; i < tickets; i++) {
-        int x;
-        cin >> x;
-        prices.insert(x);
+    long long coins;
+    cin >> coins;
+    vector<long long> coin_values;
+    for (long long i = 0; i < coins; i++) {
+        long long input;
+        cin >> input;
+        coin_values.push_back(input);
     }
-    for (int i = 0; i < buyers; i++){
-        int payed;
-        cin >> payed;
-        customer_pays.push_back(payed);
-    }
-    for (auto customer : customer_pays ) {
-        auto it = prices.upper_bound(customer);
-        if (it == prices.begin()) {
-            cout << -1 << "\n";
-            continue;
+    sort(coin_values.begin(), coin_values.end());
+    long long output=0;
+    for (auto coin : coin_values) {
+        if (output + 1  >= coin) {
+            output += coin;
+        } else {
+            break;
         }
-        it--;
-        cout << *it << "\n";
-        prices.erase(it);
-
     }
+    cout << output+1 << "\n";
+    return 0;
 }
