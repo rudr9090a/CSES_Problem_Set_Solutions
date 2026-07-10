@@ -1,26 +1,39 @@
 #include <bits/stdc++.h>
 using namespace std;
+long long dice_combinations(int n, vector<long long>& memo) {
+    if (n == 0) {
+        return 1;
+    }
+    const long long MOD = 1000000007;
+    long long output=0;
+    output = memo[n];
+    if (output != -1) return output;
+    output = 0;
+    const vector dice = {1,2,3,4,5,6};
+    for (int possibility : dice) {
+        int remainder = n - possibility;
+        if (remainder >= 0) {
+            output += dice_combinations(remainder, memo)%MOD;
+        }
+    }
+    output %= MOD;
+    memo[n] = output;
+    return output;
+    }
+
 
 int main() {
+
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
     //Solution
-    long long number;
+    const long long MOD = 1000000007;
+    vector<long long> memo(1000001,-1);
+    memo[0] = 1;
+    int number=0;
     cin >> number;
-    vector<long long> input_map(number+1);
-    vector<long long> inputs;
-    for (long long i = 0; i < number; i++) {
-        long long input;
-        cin >> input;
-        inputs.push_back(input);
-        input_map[input] = i;
-    }
-    int rounds = 1;
-    for (long long i = 2; i <= number; i++) {
-        if (input_map[i-1] > input_map[i]) {
-            rounds++;
-        }
-    }
-    cout << rounds << endl;
-    return 0;
+    long long output = 0;
+    output = dice_combinations(number,memo);
+    cout << output%MOD << endl;
+
 }
