@@ -1,26 +1,26 @@
 #include <bits/stdc++.h>
 using namespace std;
+
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
     //Solution
-    long long coins;
-    cin >> coins;
-    vector<long long> coin_values;
-    for (long long i = 0; i < coins; i++) {
+    long long number;
+    cin >> number;
+    vector<long long> input_map(number+1);
+    vector<long long> inputs;
+    for (long long i = 0; i < number; i++) {
         long long input;
         cin >> input;
-        coin_values.push_back(input);
+        inputs.push_back(input);
+        input_map[input] = i;
     }
-    sort(coin_values.begin(), coin_values.end());
-    long long output=0;
-    for (auto coin : coin_values) {
-        if (output + 1  >= coin) {
-            output += coin;
-        } else {
-            break;
+    int rounds = 1;
+    for (long long i = 2; i <= number; i++) {
+        if (input_map[i-1] > input_map[i]) {
+            rounds++;
         }
     }
-    cout << output+1 << "\n";
+    cout << rounds << endl;
     return 0;
 }
