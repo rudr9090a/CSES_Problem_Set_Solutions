@@ -4,21 +4,19 @@ typedef long long ll;
 
 
 int main() {
-    int n;
-    cin >> n;
-    vector<ll> v(n);
-    for (int i = 0; i < n; i++) {
-        cin >> v[i];
+    int mid = (1e9)/2;
+    vector range = {1,static_cast<vector<int>::value_type>(1e9)};
+    for (int i = 0; i < 30; i++) {
+        string reponse;
+        cout << "? " << mid << endl;
+        cin >> reponse;
+        if (reponse == "YES") {
+            range[0] = mid;
+        } else {
+            range[1] = mid;
+        }
+        mid = (range[0] + range[1])/2;
     }
-    sort(v.begin(), v.end());
-    long double med = (n%2==1) ? v[(n-1)/2] : (v[n/2]+v[n/2-1])/2;
-    if (med-floor(med)>0) {
-        med = floor(med);
-    }
-    med = static_cast<ll>(med);
-    ll output = 0;
-    for (auto x : v) {
-        output = output + abs(x-med);
-    }
-    cout << output << endl;
+    cout << "! " << range[1]<< endl;
+
 }
