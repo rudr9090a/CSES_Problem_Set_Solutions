@@ -1,32 +1,24 @@
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
+
+
 int main() {
-    int n, x;
-    cin >> n >> x;
-    vector<pair<int,int>> v(n);
+    int n;
+    cin >> n;
+    vector<ll> v(n);
     for (int i = 0; i < n; i++) {
-        cin >> v[i].first;
-        v[i].second = i+1;
+        cin >> v[i];
     }
     sort(v.begin(), v.end());
-    auto p1 = v.begin();
-    auto p2 = v.end()-1;
-    while (p1->first <= p2->first) {
-
-        if (p1==p2) {
-            break;
-        }
-        if (p1->first + p2->first == x) {
-            cout << p1->second << " " << p2->second << endl;
-            return 0;
-        }
-        if (p1->first + p2->first > x) {
-            --p2;
-        } else {
-            ++p1;
-        }
+    long double med = (n%2==1) ? v[(n-1)/2] : (v[n/2]+v[n/2-1])/2;
+    if (med-floor(med)>0) {
+        med = floor(med);
     }
-    cout << "IMPOSSIBLE" << "\n";
-    return 0;
+    med = static_cast<ll>(med);
+    ll output = 0;
+    for (auto x : v) {
+        output = output + abs(x-med);
+    }
+    cout << output << endl;
 }
