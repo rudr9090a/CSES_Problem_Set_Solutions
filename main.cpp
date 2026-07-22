@@ -1,22 +1,26 @@
 #include <bits/stdc++.h>
 using namespace std;
-typedef long long ll;
 
+using ll = long long;
 
 int main() {
-    int mid = (1e9)/2;
-    vector range = {1,static_cast<vector<int>::value_type>(1e9)};
-    for (int i = 0; i < 30; i++) {
-        string reponse;
-        cout << "? " << mid << endl;
-        cin >> reponse;
-        if (reponse == "YES") {
-            range[0] = mid;
-        } else {
-            range[1] = mid;
-        }
-        mid = (range[0] + range[1])/2;
-    }
-    cout << "! " << range[1]<< endl;
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    //solution
 
+    ll n;
+    cin >> n;
+    string s;
+    s = std::to_string(n);
+    ll steps = 0;
+    while (n != 0) {
+        int to_rm = 0;
+        for (auto x : s) {
+            to_rm = max(to_rm, x - '0');
+        }
+        n -= to_rm;
+        steps++;
+        s = to_string(n);
+    }
+    cout << steps << "\n";
 }
